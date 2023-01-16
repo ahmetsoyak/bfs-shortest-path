@@ -1,0 +1,20 @@
+body {
+    background-color: #5e5e5e;
+    color: #ffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#map {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: calc(10 * 1.5rem);
+}
+.square {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #e0e0e0;
+    border: 1px solid red;
+    cursor: pointer;
+}
