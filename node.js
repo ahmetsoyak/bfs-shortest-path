@@ -1,3 +1,5 @@
+import Graph from "./graph.js";
+
 class Node extends HTMLSpanElement {
     top = null;
     right = null;
@@ -8,6 +10,8 @@ class Node extends HTMLSpanElement {
         super();
         this.x = x;
         this.y = y;
+        this.parent = parent;
+        this.index = this.stringfyNodePosition();
 
         this.classList.add("square");
         this.onclick = this.select;
@@ -16,27 +20,44 @@ class Node extends HTMLSpanElement {
         };
     }
 
+    stringfyNodePosition() {
+        return `x${this.x}y${this.y}`;
+    }
+
     select(event) {
-        if (event.metaKey || event.ctrlKey) {
+        if (event.shiftKey) {
+            this.selectSource(this.element);
+        } else if (event.metaKey || event.ctrlKey) {
             this.selectTarget(this.element);
         } else {
             this.selectObstacle(this.element);
         }
     }
-
-    resetTargets() {
-        this.parentElement.childNodes.forEach((node) => {
-            if (node.style.backgroundColor == "green") node.style.backgroundColor = "#fff";
+    resetNodesByColor(color) {
+        if (!color) return;
+        Object.values(this.parent.map).forEach((node) => {
+            if (node.style.backgroundColor === color) node.style.backgroundColor = Graph.DEFAULT_COLOR;
         });
     }
-
-    selectTarget() {
-        this.resetTargets();
-        this.style.backgroundColor = "green";
+    selectSource() {
+        this.resetNodesByColor(Graph.SOURCE_COLOR);
+        this.style.backgroundColor = Graph.SOURCE_COLOR;
     }
-
+    selectTarget() {
+        this.resetNodesByColor(Graph.TARGET_COLOR);
+        this.style.backgroundColor = Graph.TARGET_COLOR;
+    }
     selectObstacle() {
-        this.style.backgroundColor = "red";
+        this.style.backgroundColor = Graph.WALL_COLOR;
+    }
+    isSource() {
+        return this.style.backgroundColor === Graph.SOURCE_COLOR;
+    }
+    isTarget() {
+        return this.style.backgroundColor === Graph.TARGET_COLOR;
+    }
+    isWall() {
+        return this.style.backgroundColor === Graph.WALL_COLOR;
     }
 }
 

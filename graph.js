@@ -1,12 +1,19 @@
 import Node from "./node.js";
 
 class Graph extends HTMLDivElement {
-    constructor(id, x, y) {
+    static DEFAULT_COLOR = "white";
+    static SOURCE_COLOR = "purple";
+    static TARGET_COLOR = "green";
+    static WALL_COLOR = "red";
+
+    constructor(id, x, y, alogrithm) {
         super();
         this.id = id;
         this.limit = { x, y };
         this.map = new Object();
+        this.alogrithm = alogrithm;
         this.init();
+        console.log(this);
 
         this.isMouseDown = false;
         this.addEventListener("mousedown", (event) => {
@@ -14,12 +21,9 @@ class Graph extends HTMLDivElement {
         });
         this.addEventListener("mouseup", () => (this.isMouseDown = false));
     }
-
     init() {
         for (let y = 0; y < this.limit.y; y++) {
-            let row = document.createElement("div");
-            row.classList.add("row");
-            this.appendChild(row);
+            let row = this.addRow();
             for (let x = 0; x < this.limit.x; x++) {
                 let node = new Node(this, x, y);
                 row.appendChild(node);
@@ -30,16 +34,15 @@ class Graph extends HTMLDivElement {
 
         this.childNodes.forEach((row) => row.childNodes.forEach((node) => this.findNeighbours(node)));
     }
-
-    find() {
-        map.childNodes.forEach(
-            (node) =>
-                (node.onclick = (event) => {
-                    event.stopPropagation();
-                })
-        );
+    addRow() {
+        let row = document.createElement("div");
+        row.classList.add("row");
+        this.appendChild(row);
+        return row;
     }
-
+    findTarget() {
+        this.alogrithm(this, this.getSource(), this.getTarget());
+    }
     findNeighbours(node) {
         let neigbourPositions = new Object();
 
@@ -52,6 +55,12 @@ class Graph extends HTMLDivElement {
         for (const key in neigbourPositions) {
             node[key] = this.map[neigbourPositions[key]];
         }
+    }
+    getSource() {
+        return Object.values(this.map).find((node) => node.isSource());
+    }
+    getTarget() {
+        return Object.values(this.map).find((node) => node.isTarget());
     }
 }
 
