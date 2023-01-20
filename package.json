@@ -1,0 +1,23 @@
+{
+    "name": "bfs-shortest-path",
+    "author": {
+        "name": "Ahmet SOYAK <ahmetsoyak35@gmail.com>"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "tsc --build",
+        "serve": "live-server --ignore=./build"
+    },
+    "devDependencies": {
+        "live-server": "^1.2.2",
+        "typescript": "^4.9.4"
+    },
+    "keywords": [
+        "bfs",
+        "shortest",
+        "path",
+        "algorithm"
+    ],
+    "license": "MIT",
+    "version": "1.0.0"
+}

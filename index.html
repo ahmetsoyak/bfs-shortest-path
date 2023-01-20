@@ -5,17 +5,40 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>BFS for a Graph</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="./src/style/style.css" />
     </head>
     <body>
         <h1>Breadth-First Search for a Graph</h1>
         <h3>Find the sortest path!</h3>
+        <ul class="square-types">
+            <li class="square-type">
+                <label for="">Source</label>
+                <div class="square-type-info">
+                    <div class="square" color="purple"></div>
+                    <span>Shift + Click</span>
+                </div>
+            </li>
+            <li class="square-type">
+                <label for="">Target</label>
+                <div class="square-type-info">
+                    <div class="square" color="green"></div>
+                    <span>Ctrl / ⌘ + Click</span>
+                </div>
+            </li>
+            <li class="square-type">
+                <label for="">Wall</label>
+                <div class="square-type-info">
+                    <div class="square" color="red"></div>
+                    <span>Click</span>
+                </div>
+            </li>
+        </ul>
         <div id="canvas"></div>
         <div class="btn-container">
             <button id="btn">Find Target</button>
-            <button id="clear" color="red">Reset</button>
+            <button id="reset" color="red">Reset</button>
         </div>
     </body>
 
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./build/index.js"></script>
 </html>

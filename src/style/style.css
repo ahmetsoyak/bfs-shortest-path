@@ -1,3 +1,7 @@
+:root {
+    font-family:  Roboto, 'Helvetica Neue', sans-serif;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -49,6 +53,27 @@ body {
     cursor: pointer;
 }
 
+.square[color="red"] { background-color: red;}
+.square[color="green"] { background-color: green;}
+.square[color="purple"] { background-color: purple;}
+
+.square-types  {
+    background: aliceblue;
+    padding: 1rem 2.5rem;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    gap: 2rem;
+}
+.square-types .square-type label {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+.square-type-info {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+}
+
 .searched-node {
     animation: changeBg 800ms 1;
     margin: auto;
@@ -56,6 +81,7 @@ body {
     width: 100%;
     height: 100%;
 }
+
 
 @keyframes changeBg {
     0% {

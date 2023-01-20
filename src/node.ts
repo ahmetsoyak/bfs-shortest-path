@@ -1,12 +1,17 @@
 import Graph from "./graph.js";
 
 class Node extends HTMLSpanElement {
-    top = null;
-    right = null;
-    bottom = null;
-    left = null;
+    x: number;
+    y: number;
+    parent: Graph;
+    index: string;
 
-    constructor(parent, x, y) {
+    top: Node | null = null;
+    right: Node | null = null;
+    bottom: Node | null = null;
+    left: Node | null = null;
+
+    constructor(parent: Graph, x: number, y: number) {
         super();
         this.x = x;
         this.y = y;
@@ -16,7 +21,7 @@ class Node extends HTMLSpanElement {
         this.classList.add("square");
         this.onclick = this.select;
         this.onmouseover = () => {
-            if (parent.isMouseDown) this.selectObstacle(this);
+            if (parent.isMouseDown) this.selectObstacle();
         };
     }
 
@@ -24,43 +29,43 @@ class Node extends HTMLSpanElement {
         return `x${this.x}y${this.y}`;
     }
 
-    select(event) {
+    select(event: KeyboardEvent | MouseEvent) {
         if (event.shiftKey) {
-            this.selectSource(this.element);
+            this.selectSource();
         } else if (event.metaKey || event.ctrlKey) {
-            this.selectTarget(this.element);
+            this.selectTarget();
         } else {
-            this.selectObstacle(this.element);
+            this.selectObstacle();
         }
     }
-    resetNodesByColor(color) {
+    resetNodesByColor(color: string): void {
         if (!color) return;
-        Object.values(this.parent.map).forEach((node) => {
+        Object.values(this.parent.map).forEach((node: Node) => {
             if (node.style.backgroundColor === color) node.style.backgroundColor = Graph.DEFAULT_COLOR;
         });
     }
-    selectSource() {
+    selectSource(): void {
         this.resetNodesByColor(Graph.SOURCE_COLOR);
         this.style.backgroundColor = Graph.SOURCE_COLOR;
     }
-    selectTarget() {
+    selectTarget(): void {
         this.resetNodesByColor(Graph.TARGET_COLOR);
         this.style.backgroundColor = Graph.TARGET_COLOR;
     }
-    selectObstacle() {
+    selectObstacle(): void {
         this.style.backgroundColor = Graph.WALL_COLOR;
     }
-    isSource() {
+    isSource(): boolean {
         return this.style.backgroundColor === Graph.SOURCE_COLOR;
     }
-    isTarget() {
+    isTarget(): boolean {
         return this.style.backgroundColor === Graph.TARGET_COLOR;
     }
-    isWall() {
+    isWall(): boolean {
         return this.style.backgroundColor === Graph.WALL_COLOR;
     }
 }
 
-customElements.define("graph-node", Node, { extends: "span" });
+window.customElements.define("graph-node", Node, { extends: "span" });
 
 export default Node;
